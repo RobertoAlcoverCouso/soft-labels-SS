@@ -44,8 +44,6 @@ In general, you can either use the runx-style commandlines shown below. Or you c
 > python -m runx.runx scripts/eval_cityscapes.yml -i
 ```
 
-The reported IOU should be 86.92. This evaluates with scales of 0.5, 1.0. and 2.0. You will find evaluation results in ./logs/eval_cityscapes/...
-
 ### Dump images for Cityscapes
 
 ```bash
