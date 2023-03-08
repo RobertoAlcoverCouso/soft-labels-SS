@@ -1,8 +1,3 @@
-### [Paper](https://arxiv.org/abs/2005.10821) | [YouTube](https://youtu.be/odAGA7pFBGA)  | [Cityscapes Score](https://www.cityscapes-dataset.com/method-details/?submissionID=7836) <br>
-
-Pytorch implementation of our paper [Hierarchical Multi-Scale Attention for Semantic Segmentation](https://arxiv.org/abs/2005.10821).<br>
-
-Please refer to the `sdcnet` branch if you are looking for the code corresponding to [Improving Semantic Segmentation via Video Prediction and Label Relaxation](https://nv-adlr.github.io/publication/2018-Segmentation).
 
 ## Installation 
 
@@ -10,7 +5,7 @@ Please refer to the `sdcnet` branch if you are looking for the code correspondin
 * You can use ./Dockerfile to build an image.
 
 
-## Download Weights
+## Weights
 
 * Create a directory where you can keep large files. Ideally, not in this directory.
 ```bash
@@ -21,20 +16,13 @@ Please refer to the `sdcnet` branch if you are looking for the code correspondin
 
   __C.ASSETS_PATH=<large_asset_dir>
 
-* Download pretrained weights from [google drive](https://drive.google.com/open?id=1fs-uLzXvmsISbS635eRZCc5uzQdBIZ_U) and put into `<large_asset_dir>/seg_weights`
+* Download pretrained weights from Supplementary Material and put into `<large_asset_dir>/seg_weights`
 
 ## Download/Prepare Data
 
 If using Cityscapes, download Cityscapes data, then update `config.py` to set the path:
 ```python
 __C.DATASET.CITYSCAPES_DIR=<path_to_cityscapes>
-```
-
-* Download Autolabelled-Data from [google drive](https://drive.google.com/file/d/1DtPo-WP-hjaOwsbj6ZxTtOo_7R_4TKRG/view?usp=sharing)
-
-If using Cityscapes Autolabelled Images, download Cityscapes data, then update `config.py` to set the path:
-```python
-__C.DATASET.CITYSCAPES_CUSTOMCOARSE=<path_to_cityscapes>
 ```
 
 If using Mapillary, download Mapillary data, then update `config.py` to set the path:
@@ -51,26 +39,12 @@ In general, you can either use the runx-style commandlines shown below. Or you c
 
 ### Run inference on Cityscapes
 
-Dry run:
-```bash
-> python -m runx.runx scripts/eval_cityscapes.yml -i -n
-```
-This will just print out the command but not run. It's a good way to inspect the commandline. 
 
-Real run:
 ```bash
 > python -m runx.runx scripts/eval_cityscapes.yml -i
 ```
 
 The reported IOU should be 86.92. This evaluates with scales of 0.5, 1.0. and 2.0. You will find evaluation results in ./logs/eval_cityscapes/...
-
-### Run inference on Mapillary
-
-```bash
-> python -m runx.runx scripts/eval_mapillary.yml -i
-```
-
-The reported IOU should be 61.05. Note that this must be run on a 32GB node and the use of 'O3' mode for amp is critical in order to avoid GPU out of memory. Results in logs/eval_mapillary/...
 
 ### Dump images for Cityscapes
 
@@ -86,24 +60,15 @@ This will dump network output and composited images from running evaluation with
 > python -m runx.runx scripts/dump_folder.yml -i
 ```
 
-You should end up seeing images that look like the following:
-
-![alt text](imgs/composited_sf.png "example inference, composited")
 
 ## Train a model
 
-Train cityscapes, using HRNet + OCR + multi-scale attention with fine data and mapillary-pretrained model
+Train cityscapes
 ```bash
 > python -m runx.runx scripts/train_cityscapes.yml -i
 ```
 
 The first time this command is run, a centroid file has to be built for the dataset. It'll take about 10 minutes. The centroid file is used during training to know how to sample from the dataset in a class-uniform way.
 
-This training run should deliver a model that achieves 84.7 IOU.
+This training run should deliver a model that achieves ~84.4 IOU.
 
-## Train SOTA default train-val split
-```bash
-> python -m runx.runx  scripts/train_cityscapes_sota.yml -i
-```
-Again, use `-n` to do a dry run and just print out the command. This should result in a model with 86.8 IOU. If you run out of memory, try to lower the crop size or turn off rmi_loss.
-# soft-labels-SS
