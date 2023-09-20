@@ -54,10 +54,15 @@ This will dump network output and composited images from running evaluation with
 
 ### Run inference and dump images on a folder of images
 
+Modify the scripts/dump_folder.yml to point to the image folder to run inference:
+```yalm
+eval_folder:<path_to_image_folder>
+```
+Run:
 ```bash
 > python -m runx.runx scripts/dump_folder.yml -i
 ```
-
+This will dump network output, composited images and attention maps from running evaluation with the Cityscapes validation set. 
 
 ## Train a model
 
