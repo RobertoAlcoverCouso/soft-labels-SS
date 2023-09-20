@@ -1,5 +1,5 @@
 """
-# Code borrowded from:
+# Code adapted from:
 # https://github.com/zijundeng/pytorch-semantic-segmentation/blob/master/utils/transforms.py
 #
 #
